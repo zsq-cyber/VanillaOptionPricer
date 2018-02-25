@@ -5,6 +5,7 @@ Vanilla Option Pricer REST API Service
 https://app.swaggerhub.com/apis/zsq-cyber8/VanillaOptionPricer/1.0.0
 
 ## Design
+#### Project structure
 * ```core```
   * ```constants.py``` Constants such as date format, status code, rounding etc
   * ```pricer.py``` Option pricer that accepts a model and invoke pricing action
@@ -23,6 +24,9 @@ https://app.swaggerhub.com/apis/zsq-cyber8/VanillaOptionPricer/1.0.0
 * ```run_server.py``` For demo
 * ```run_client.py``` For demo
 
+#### Special case assumption
+If volatility (sigma) is zero, my current handling is to return 0 for both price and all greeks.
+This might need to improve with further discussion.
 
 ## Setup
 This project is tested with python 2.7.14
