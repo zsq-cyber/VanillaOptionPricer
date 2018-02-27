@@ -16,8 +16,56 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
-@app.route('/pricer', methods=['POST'])
-def pricing_with_file():
+@app.route('/pricer/price', methods=['POST'])
+def get_price():
+    """return price"""
+    return handle_pricer_request("get_price")
+
+
+@app.route('/pricer/delta', methods=['POST'])
+def get_delta():
+    """return delta"""
+    return handle_pricer_request("get_delta")
+
+
+@app.route('/pricer/gamma', methods=['POST'])
+def get_gamma():
+    """return gamma"""
+    return handle_pricer_request("get_gamma")
+
+
+@app.route('/pricer/vega', methods=['POST'])
+def get_vega():
+    """return vega"""
+    return handle_pricer_request("get_vega")
+
+
+@app.route('/pricer/theta', methods=['POST'])
+def get_theta():
+    """return theta"""
+    return handle_pricer_request("get_theta")
+
+
+@app.route('/pricer/rho', methods=['POST'])
+def get_rho():
+    """return rho"""
+    return handle_pricer_request("get_rho")
+
+
+@app.route('/pricer/greeks', methods=['POST'])
+def get_greeks():
+    """return all greeks"""
+    return handle_pricer_request("get_greeks")
+
+
+@app.route('/pricer/all', methods=['POST'])
+def get_all():
+    """return price and all greeks"""
+    return handle_pricer_request("get_price_and_greeks")
+
+
+def handle_pricer_request(pricing_method):
+    """generate response with a specified pricer method (get_price, get_delta, get_greeks etc.)"""
     product_set = get_payload(request)
     if product_set is None:
         # if product set file cannot be parsed to json, send error 591
@@ -27,7 +75,7 @@ def pricing_with_file():
         # if exception happened, send error 592
         # else send pricing result with response 200
         try:
-            result = get_price(product_set)
+            result = do_pricing(product_set, pricing_method)
             return jsonify(result), CODE_PRICING_SUCCESSFUL
         except Exception as e:
             print(e)
@@ -43,7 +91,7 @@ def get_payload(request_):
         return None
 
 
-def get_price(product_set):
+def do_pricing(product_set, pricing_method):
     """Do pricing for each option in the product set, and return pricing result as a list"""
     result = []
     for desc in product_set['Products']:
@@ -53,13 +101,17 @@ def get_price(product_set):
         # create option pricer with Black-Scholes Model
         option_pricer = OptionPricer(BlackScholesModel(option))
 
-        # calculate price and greeks
-        ret = option_pricer.do_pricing()
+        # invoke pricer with a specified method
+        ret = invoke_pricer_by_method(option_pricer, pricing_method)
 
         # append pricing result to the final result set
         ret['description'] = option.describe_option()
         result.append(ret)
     return {'result': result}
+
+
+def invoke_pricer_by_method(option_pricer, pricing_method, *args, **kwargs):
+    return getattr(option_pricer, pricing_method)(*args, **kwargs)
 
 
 def create_server():

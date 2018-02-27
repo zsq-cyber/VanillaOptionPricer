@@ -9,7 +9,33 @@ class PricingModel(object):
     """Abstract Base Class for option pricing model"""
 
     @abc.abstractmethod
-    def do_pricing(self, *args, **kwargs):
+    def get_price(self, *args, **kwargs):
+        """calculate theoretical price"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_delta(self, *args, **kwargs):
+        """calculate delta"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_gamma(self, *args, **kwargs):
+        """calculate gamma"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_vega(self, *args, **kwargs):
+        """calculate vega"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_theta(self, *args, **kwargs):
+        """calculate theta"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_rho(self, *args, **kwargs):
+        """calculate rho"""
         raise NotImplementedError
 
 
@@ -88,20 +114,3 @@ class BlackScholesModel(PricingModel):
         return self.flag * (
                 self.cdf(self.flag * self.d1) * self.S -
                 self.cdf(self.flag * self.d2) * self.K * np.exp(-self.r * self.t))
-
-    def get_price_and_greeks(self):
-        """Rounding price and greeks, and format with a dictionary"""
-        return {
-            'price': round(self.get_price(), ROUND_NUM),
-            'greeks': {
-                'delta': round(self.get_delta(), ROUND_NUM),
-                'gamma': round(self.get_gamma(), ROUND_NUM),
-                'vega': round(self.get_vega(), ROUND_NUM),
-                'theta': round(self.get_theta(), ROUND_NUM),
-                'rho': round(self.get_rho(), ROUND_NUM)
-            }
-        }
-
-    def do_pricing(self):
-        """The method to do the pricing"""
-        return self.get_price_and_greeks()
