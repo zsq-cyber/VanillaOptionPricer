@@ -2,7 +2,7 @@
 Vanilla Option Pricer REST API Service
 
 ## Swagger
-https://app.swaggerhub.com/apis/zsq-cyber8/VanillaOptionPricer/1.0.0
+https://app.swaggerhub.com/apis/zsq-cyber8/VanillaOptionPricer/1.1.0
 
 ## Design
 #### Project structure
@@ -66,5 +66,14 @@ python run_client.py
 ```
 
 ## Demo
-##### *Pricing result for product set A*
-![image](https://github.com/zsq-cyber/VanillaOptionPricer/blob/master/screenshots/ProductSetAPricing.png)
+##### *Request price*
+![image](https://github.com/zsq-cyber/VanillaOptionPricer/blob/master/screenshots/GetPriceDemo.png)
+
+##### *Request theta*
+![image](https://github.com/zsq-cyber/VanillaOptionPricer/blob/master/screenshots/GetThetaDemo.png)
+
+##### *Request all greeks*
+![image](https://github.com/zsq-cyber/VanillaOptionPricer/blob/master/screenshots/GetGreeksDemo.png)
+
+##### *Request price and all greeks*
+![image](https://github.com/zsq-cyber/VanillaOptionPricer/blob/master/screenshots/GetPriceAndGreeksDemo.png)
