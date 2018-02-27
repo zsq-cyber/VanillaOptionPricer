@@ -2,7 +2,7 @@
 Vanilla Option Pricer REST API Service
 
 ## Swagger
-https://app.swaggerhub.com/apis/zsq-cyber8/VanillaOptionPricer/1.0.0
+https://app.swaggerhub.com/apis/zsq-cyber8/VanillaOptionPricer/1.1.0
 
 ## Design
 #### Project structure
