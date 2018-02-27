@@ -6,7 +6,7 @@ from core.pricing_models import BlackScholesModel
 
 class PricingModelTestCase(unittest.TestCase):
     def testBlackScholesModelCall(self):
-        optionDesc = {
+        desc = {
             "ProductName": "Call",
             "ProductParams":
                 {
@@ -19,10 +19,9 @@ class PricingModelTestCase(unittest.TestCase):
                     "MaturityDate": "22-Feb-19"
                 }
         }
-        self.option = VanillaOption()
-        self.option.parseFromDesc(optionDesc)
-        blackScholesModel = BlackScholesModel(self.option)
-        result = blackScholesModel.getPriceAndGreeks()
+        self.option = VanillaOption(desc)
+        black_scholes_model = BlackScholesModel(self.option)
+        result = black_scholes_model.get_price_and_greeks()
         self.assertEqual(result['price'], 0.09934)
         self.assertEqual(result['greeks']['delta'], 0.54967)
         self.assertEqual(result['greeks']['gamma'], 1.58556)
@@ -31,7 +30,7 @@ class PricingModelTestCase(unittest.TestCase):
         self.assertEqual(result['greeks']['rho'], 0.00449)
 
     def testBlackScholesModelPut(self):
-        optionDesc = {
+        desc = {
             "ProductName": "Put",
             "ProductParams":
                 {
@@ -44,10 +43,9 @@ class PricingModelTestCase(unittest.TestCase):
                     "MaturityDate": "23-Feb-19"
                 }
         }
-        self.option = VanillaOption()
-        self.option.parseFromDesc(optionDesc)
-        blackScholesModel = BlackScholesModel(self.option)
-        result = blackScholesModel.getPriceAndGreeks()
+        self.option = VanillaOption(desc)
+        black_scholes_model = BlackScholesModel(self.option)
+        result = black_scholes_model.get_price_and_greeks()
         self.assertEqual(result['price'], 0.01465)
         self.assertEqual(result['greeks']['delta'], -0.00188)
         self.assertEqual(result['greeks']['gamma'], 0.00024)

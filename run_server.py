@@ -1,7 +1,7 @@
-from services.server import createServer
+from services.server import create_server
 
 
 if __name__ == '__main__':
-    app = createServer()
+    app = create_server()
     app.run(port=8080)
 

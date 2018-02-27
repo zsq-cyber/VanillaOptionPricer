@@ -16,7 +16,7 @@ https://app.swaggerhub.com/apis/zsq-cyber8/VanillaOptionPricer/1.0.0
   * ```server.py``` Implementation of option pricer server based on Flask framework
   * ```client.py``` A client to test the pricer service
 * ```utils```
-  * ```datetime_utils``` Datetime utils, e.g. convert date string to date object
+  * ```datetime_utils.py``` Datetime utils, e.g. convert date string to date object
 * ```test```
   * All unit tests
 * ```resources```
@@ -29,7 +29,8 @@ If volatility (sigma) is zero, my current handling is to return 0 for both price
 This might need to improve with further discussion.
 
 ## Setup
-This project is tested with python 2.7.14
+This project is tested with python 3.6.4
+
 To setup an virtual environment with all required dependencies
 
 Download requirements.txt in the project

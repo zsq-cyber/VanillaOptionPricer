@@ -11,17 +11,8 @@ class OptionType(IntEnum):
 
 class VanillaOption(object):
     """Serve as a Data Transfer Object to carry all information of an option"""
-    def __init__(self):
-        self.__type = None
-        self.__underlying = ''
-        self.__spot = 0
-        self.__strike = 0
-        self.__rate = 0
-        self.__vol = 0
-        self.__strikeDate = ''
-        self.__maturityDate = ''
 
-    def parseFromDesc(self, desc):
+    def __init__(self, desc):
         """Parse option info from a product description"""
         if desc['ProductName'] == 'Call':
             self.__type = OptionType.CALL
@@ -32,18 +23,18 @@ class VanillaOption(object):
         self.__strike = desc['ProductParams']['Strike']
         self.__rate = desc['ProductParams']['Rate']
         self.__vol = desc['ProductParams']['Vol']
-        self.__strikeDate = desc['ProductParams']['StrikeDate']
-        self.__maturityDate = desc['ProductParams']['MaturityDate']
+        self.__strike_date = desc['ProductParams']['StrikeDate']
+        self.__maturity_date = desc['ProductParams']['MaturityDate']
 
-    def describeOption(self):
+    def describe_option(self):
         """Return a string that uniquely represent an option"""
         return '[{}] - [{}] - [{}, {}]'.format(
-            str(self.__type), self.__underlying, self.__strikeDate, self.__maturityDate)
+            str(self.__type), self.__underlying, self.__strike_date, self.__maturity_date)
 
-    def getTimeToExercise(self):
+    def get_time_to_exercise(self):
         """Calculate time to exercise"""
-        return (DateTimeUtils.string2date(self.maturityDate) - DateTimeUtils.string2date(self.strikeDate)).days / \
-               DAYS_OF_YEAR
+        return (DateTimeUtils.string_to_date(self.maturity_date) - DateTimeUtils.string_to_date(
+            self.strike_date)).days / DAYS_OF_YEAR
 
     @property
     def type(self):
@@ -70,9 +61,9 @@ class VanillaOption(object):
         return self.__vol
 
     @property
-    def strikeDate(self):
-        return self.__strikeDate
+    def strike_date(self):
+        return self.__strike_date
 
     @property
-    def maturityDate(self):
-        return self.__maturityDate
+    def maturity_date(self):
+        return self.__maturity_date
