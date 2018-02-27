@@ -7,16 +7,22 @@ from test.test_pricing_models import PricingModelTestCase
 
 
 def create_suite():
-    test_suite = unittest.TestSuite()
-    test_suite.addTest(OptionTestCase())
-    test_suite.addTest(PricingModelTestCase())
-    test_suite.addTest(DateTimeUtilsTestCase())
-    test_suite.addTest(OptionPricerTestCase())
-    return test_suite
+    test_classes_to_run = [OptionTestCase,
+                           PricingModelTestCase,
+                           OptionPricerTestCase,
+                           DateTimeUtilsTestCase]
+
+    loader = unittest.TestLoader()
+
+    suites_list = []
+    for test_class in test_classes_to_run:
+        suite = loader.loadTestsFromTestCase(test_class)
+        suites_list.append(suite)
+
+    return unittest.TestSuite(suites_list)
 
 
 if __name__ == '__main__':
-    suite = create_suite()
-
+    test_suite = create_suite()
     runner = unittest.TextTestRunner()
-    runner.run(suite)
+    results = runner.run(test_suite)
